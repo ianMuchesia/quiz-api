@@ -1,8 +1,33 @@
 import React, { useEffect, useState } from "react";
-
+import axios from 'axios'
+import {useNavigate } from "react-router-dom"
+import { AppContextType, country } from "../@types/types";
+import CateforyForm from "../components/CateforyForm";
+import { useGlobalContext } from '../context'
 const Category = () => {
-  const [countries, setCountries] = useState([]);
 
+    const {setQuiz} = useGlobalContext() as AppContextType || {}
+
+    const navigate = useNavigate()
+  const [countries, setCountries] = useState<[]>([])
+
+  const [selectedCategory , setSelectedCategory ] = useState({
+    categories:"",
+    difficulty:"",
+    region:"",
+  })
+
+  
+//options selected
+  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>)=>{
+    setSelectedCategory(prevSelectedCategroy=>{
+        return{
+            ...prevSelectedCategroy,
+            [e.target.name]: e.target.value
+        }
+    })
+  }
+//fetching countries
   useEffect(() => {
     let isMounted = true;
     const fetchData = async () => {
@@ -11,47 +36,35 @@ const Category = () => {
         const response = await fetch(`https://restcountries.com/v2/all`);
         const data = await response.json();
         if (isMounted) {
-            console.log(data)
+           
           setCountries(data);
         }
       ;
-    } catch (error) {
+    } catch (error: any) {
+        alert(error.message)
       console.log(error);
     }
 }
-    fetchData()
+    //fetchData()
     return ()=>{isMounted = false}
   }, []);
+
+
+  const handleSubmit =async(e: React.FormEvent)=>{
+    e.preventDefault()
+    console.log(selectedCategory)
+
+    //api call for the quiz
+    const response = await axios.get(`https://the-trivia-api.com/api/questions?limit=1&categories=${selectedCategory.categories}&difficulty=${selectedCategory.difficulty}&region=KE`)
+
+    setQuiz(response.data) 
+    navigate("/Question")
+    
+  }
   return (
     <section>
-      <h1>please choose category</h1>
-      <div>
-        <label htmlFor="category">Category</label>
-        <select>
-          <option>Arts & Literature</option>
-          <option>Film & TV</option>
-          <option>Food & Drink</option>
-          <option>General Knowledge</option>
-          <option>Geography</option>
-          <option>History</option>
-          <option>Music</option>
-          <option>Science</option>
-          <option>Society & Culture</option>
-          <option>Sport & leisure</option>
-        </select>
-
-        <label htmlFor="difficulty">Difficulty</label>
-        <select>
-          <option>easy</option>
-          <option>medium</option>
-          <option>hard</option>
-        </select>
-        <label htmlFor="region">Region</label>
-        <select>{
-            countries.map(country=>  <option>{country.name}</option>)}
-        
-        </select>
-      </div>
+      <h1 className="text-center  font-bold text-4xl m-5">please choose category</h1>
+      <CateforyForm countries={countries} selectedCategory={selectedCategory} handleChange={handleChange} handleSubmit={handleSubmit}/>
     </section>
   );
 };
