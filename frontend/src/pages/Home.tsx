@@ -1,13 +1,16 @@
 import React from 'react'
-import Question from '../components/Question'
-import Answers from '../components/Answers'
-
+import {Link } from 'react-router-dom'
 const Home = () => {
   return (
-    <div className='w-[80%] h-[80%] border-2 shadow-xl shadow-slate-600 m-10 rounded-sm mx-auto '>
-     <Question/>
-      <Answers/>
-    </div>
+    <section className='grid place-items-center h-[100vh]'>
+        <div className='grid place-items-center gap-2'>
+            <h1 className='text-center text-4xl font-extrabold '>Welcome</h1>
+            <Link to="Category">
+            <button className='px-10 py-4 text-xl border-4 border-black rounded-xl'>Start</button>
+            </Link>
+        </div>
+        
+    </section>
   )
 }
 
