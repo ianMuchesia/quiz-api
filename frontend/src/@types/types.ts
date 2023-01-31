@@ -3,22 +3,32 @@ export interface country{
     alpha2code: string;
 
 }
+
+export interface quizType{
+    question:string;
+    incorrectAnswers:string[];
+    correctAnswer:string;
+}
 export interface Props{
-    countries: [];
+    countries:[];
+    quiz:quizType[];
+    handleSubmit: (e: React.FormEvent) => Promise<void>;
+    handleChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+}
+
+
+
+export interface AppContextType{
     selectedCategory: {
         categories: string;
         difficulty: string;
         region: string;
     };
-    handleSubmit: (e: React.FormEvent) => Promise<void>;
-    handleChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+    setSelectedCategory: React.Dispatch<React.SetStateAction<{
+        categories: string;
+        difficulty: string;
+        region: string;
+    }>>;
+  
 }
 
-export interface AppContextType{
-    quiz: Quiz[];
-    setQuiz:React.Dispatch<React.SetStateAction<Quiz[]>>;
-}
-
-export interface Quiz{
-    question: string;
-}
