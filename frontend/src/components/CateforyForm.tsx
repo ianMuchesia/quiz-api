@@ -1,15 +1,16 @@
 import React from 'react'
 import { AppContextType, country, Props } from '../@types/types'
+import { useGlobalContext } from '../context'
 
-const CateforyForm = ({countries, handleChange, handleSubmit, selectedCategory}: Props) => {
+const CateforyForm = ({countries, handleChange, handleSubmit }: Props) => {
 
     
-
+const {selectedCategory } = useGlobalContext() as AppContextType
 
   return (
     <form  className="h-full grid place-items-center" onSubmit={handleSubmit}>
         <div className='grid gap-4'>
-        <div className='grid'><label  htmlFor="category" tabIndex={0} className="text-center">Category</label>
+        <div className='grid'><label  htmlFor="category"  className="text-center">Category</label>
     <select id="category"  className="px-4 py-2 rounded-lg bg-transparent max-w-[400px] border-2 text-lg font-semibold text-center" onChange={handleChange} value={selectedCategory.categories} name="categories">
     <option value="">--</option>
       <option  value="arts_and_literature">Arts & Literature</option>

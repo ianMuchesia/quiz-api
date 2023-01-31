@@ -6,16 +6,12 @@ import CateforyForm from "../components/CateforyForm";
 import { useGlobalContext } from '../context'
 const Category = () => {
 
-    const {setQuiz} = useGlobalContext() as AppContextType || {}
+    const {setSelectedCategory} = useGlobalContext() as AppContextType
 
     const navigate = useNavigate()
   const [countries, setCountries] = useState<[]>([])
 
-  const [selectedCategory , setSelectedCategory ] = useState({
-    categories:"",
-    difficulty:"",
-    region:"",
-  })
+
 
   
 //options selected
@@ -52,19 +48,14 @@ const Category = () => {
 
   const handleSubmit =async(e: React.FormEvent)=>{
     e.preventDefault()
-    console.log(selectedCategory)
-
-    //api call for the quiz
-    const response = await axios.get(`https://the-trivia-api.com/api/questions?limit=1&categories=${selectedCategory.categories}&difficulty=${selectedCategory.difficulty}&region=KE`)
-
-    setQuiz(response.data) 
+ 
     navigate("/Question")
     
   }
   return (
     <section>
       <h1 className="text-center  font-bold text-4xl m-5">please choose category</h1>
-      <CateforyForm countries={countries} selectedCategory={selectedCategory} handleChange={handleChange} handleSubmit={handleSubmit}/>
+      <CateforyForm countries={countries} handleChange={handleChange} handleSubmit={handleSubmit}/>
     </section>
   );
 };
