@@ -6,7 +6,7 @@ import CateforyForm from "../components/CateforyForm";
 import { useGlobalContext } from '../context'
 const Category = () => {
 
-    const {setSelectedCategory} = useGlobalContext() as AppContextType
+    const {selectedCategory,setSelectedCategory} = useGlobalContext() as AppContextType
 
     const navigate = useNavigate()
   const [countries, setCountries] = useState<[]>([])
@@ -41,15 +41,28 @@ const Category = () => {
       console.log(error);
     }
 }
-    //fetchData()
+    fetchData()
     return ()=>{isMounted = false}
   }, []);
 
 
   const handleSubmit =async(e: React.FormEvent)=>{
     e.preventDefault()
- 
-    navigate("/Question")
+  try {
+    
+    const response = await axios.post(`http://localhost:3000/api/v1/quiz`,{
+      category: selectedCategory.categories,
+      region: selectedCategory.region,
+      difficulty:selectedCategory.difficulty,
+      sessionName:selectedCategory.categories + selectedCategory.difficulty
+    })
+    console.log(response)
+   // navigate("/Question")
+    
+  } catch (error: any) {
+    alert(error.message)
+    console.log(error)
+  }
     
   }
   return (
