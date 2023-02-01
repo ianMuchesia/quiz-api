@@ -19,11 +19,9 @@ const postQuiz=async(req, res)=>{
         fetchUrl += `&region=${region}`
        }
        const {data} = await axios.get(fetchUrl)
+      
+        const newPost = await Post.create(data) 
        
-         const newPost = await Post.create({
-            question:data
-        })
-        console.log("yess")
         res.status(201).json({success: true, data: newPost}) 
       
     } catch (error) {

@@ -1,41 +1,50 @@
 import mongoose from "mongoose";
-import shuffle from "../trial.js";
-const Post = new mongoose.Schema({
-  date: {
-    type: Date,
-    deafaut: Date.now(),
-  },
-  questions: 
-    {
-      category: {
-        type: String,
-        required: false,
-      },
-      region: {
-        type: String,
-        required: false,
-      },
-      difficulty: {
-        type: String,
-        required: false,
-      },
 
-      id: {
-        type: String,
-        required: true,
-      },
-      incorrectAnswers: [String | Number],
-      question: {
-        type: String,
-        required: true,
-      },
-      correctAnswer:{
-        type: String,
-        required: true,
-      }
-    },
+const Post = new mongoose.Schema(
+        
+        [{
+            category: {
+              type: String,
+              required: false,
+            },
+            region: {
+              type: String,
+              required: false,
+            },
+            difficulty: {
+              type: String,
+              required: false,
+            },
+      
+            id: {
+              type: String,
+              required: true,
+            },
+            incorrectAnswers: [String | Number],
+            question: {
+              type: String,
+              required: true,
+            },
+            correctAnswer:{
+              type: String,
+              required: true,
+            },
+            tags:[],
+            type:String,
+            regions:[],
+            isNiche:Boolean,
+            date:{
+                type:Date,
+                default:Date.now()
+              }
+      }], 
+      
+      
+
+ 
+   
   
-});
+);
 
 const PostSchema = mongoose.model("Post", Post);
 
