@@ -5,9 +5,14 @@ export interface country{
 }
 
 export interface quizType{
-    question:string;
-    incorrectAnswers:string[];
+    question:[];
+    
+}
+
+export interface question{
     correctAnswer:string;
+    incorrectAnswers:string[];
+    question:string;
 }
 export interface Props{
     countries:[];

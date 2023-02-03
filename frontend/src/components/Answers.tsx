@@ -20,6 +20,7 @@ const incorrectAnswers = ({ incorrectAnswers, correctAnswer }: Props) => {
   }
   console.log();
   return (
+    <div>
     <ul className="grid gap-3 p-10 place-items-center">
       <li
         className=" w-[200px] lg:w-[400px] border-2 bg-white rounded-lg p-4 hover:bg-blue-400 flex items-center gap-4 cursor-pointer"
@@ -41,6 +42,11 @@ const incorrectAnswers = ({ incorrectAnswers, correctAnswer }: Props) => {
         <h5>{[...incorrectAnswers, correctAnswer][randomAnswerChoice()]}</h5>
       </li>
     </ul>
+    <div>
+      <button>Previous</button>
+      <button>Next</button>
+    </div>
+    </div>
   );
 };
 
