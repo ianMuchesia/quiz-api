@@ -38,7 +38,7 @@ const {selectedCategory } = useGlobalContext() as AppContextType
     <label className='text-center' htmlFor="region">Region</label>
     <select id="region" className="px-4 py-2 rounded-lg bg-transparent max-w-[400px] border-2 text-lg font-semibold text-center" value={selectedCategory.region} onChange={handleChange} name="region">
     <option >--</option> {
-        countries.map((country: country, index)=> <option value={`${country.alpha2code}`} key={index}>{country.name}</option>)}
+        countries.map((country: country, index)=> <option value={`${country.alpha2Code}`} key={index}>{country.name}</option>)}
     
     </select>
     </div>

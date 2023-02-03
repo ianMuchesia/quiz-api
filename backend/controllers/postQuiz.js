@@ -20,7 +20,7 @@ const postQuiz=async(req, res)=>{
        }
        const {data} = await axios.get(fetchUrl)
       
-        const newPost = await Post.create(data) 
+        const newPost = await Post.create({question:data,category}) 
        
         res.status(201).json({success: true, data: newPost}) 
       

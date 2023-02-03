@@ -22,19 +22,32 @@ const Category = () => {
             [e.target.name]: e.target.value
         }
     })
+    console.log(selectedCategory)
   }
 //fetching countries
   useEffect(() => {
     let isMounted = true;
     const fetchData = async () => {
     try {
-      
+      let myLocalStorageCountries = localStorage.getItem("countries") 
+      if(myLocalStorageCountries == 'string'){
+        let parsedObjectFromLocalStorage = JSON.parse(myLocalStorageCountries)
+        if(isMounted){
+          setCountries(parsedObjectFromLocalStorage)
+        }
+       
+      }else{
         const response = await fetch(`https://restcountries.com/v2/all`);
         const data = await response.json();
         if (isMounted) {
-           
+          localStorage.setItem("countries",JSON.stringify(data))
           setCountries(data);
         }
+
+      }
+
+      
+    
       ;
     } catch (error: any) {
         alert(error.message)
@@ -56,8 +69,13 @@ const Category = () => {
       difficulty:selectedCategory.difficulty,
       sessionName:selectedCategory.categories + selectedCategory.difficulty
     })
-    console.log(response)
-   // navigate("/Question")
+    if(response.data.success){
+      navigate("/Question")
+      setSelectedCategory({ categories:"",
+      difficulty:"",
+      region:"",})
+    }
+   // 
     
   } catch (error: any) {
     alert(error.message)
