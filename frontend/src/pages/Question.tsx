@@ -3,14 +3,13 @@ import Quiz from "../components/Quiz";
 import Answers from "../components/Answers";
 import axios from "axios";
 import { useGlobalContext } from "../context";
-import { AppContextType, quizType } from "../@types/types";
+import { AppContextType, quizType, question } from "../@types/types";
 
 const Question = () => {
   const { selectedCategory } = useGlobalContext() as AppContextType;
 
   const [quiz, setQuiz] = useState<quizType[]>([]);
 
- 
   const [categoryIndex, setCategoryIndex] = useState(0);
 
   const [questionIndex, setQuestionIndex] = useState(0);
@@ -36,15 +35,42 @@ const Question = () => {
     };
   }, [selectedCategory]);
 
+  //next question
+  const handleNext = () => {
+    if (questionIndex === quiz[categoryIndex]?.question.length - 1) {
+      setQuestionIndex(0);
+    } else {
+      setQuestionIndex((prevQuestionIndex) => prevQuestionIndex + 1);
+    }
+  };
+  //previous catgory
+  const handlePrevious = () => {
+    if (questionIndex === 0) {
+      setQuestionIndex(quiz[categoryIndex]?.question.length - 1);
+    } else {
+      setQuestionIndex((prevQuestionIndex) => prevQuestionIndex - 1);
+    }
+  };
+
   const renderQuestion = () => {
     if (quiz[categoryIndex]?.question[questionIndex] !== undefined) {
-      
       return (
         <>
-          <Quiz question={quiz[categoryIndex]?.question[questionIndex].question} />
+          <Quiz
+            question={quiz[categoryIndex]?.question[questionIndex].question}
+            questions={quiz[categoryIndex]?.question}
+            questionIndex={questionIndex}
+          />
           <Answers
-            incorrectAnswers={quiz[categoryIndex]?.question[questionIndex].incorrectAnswers}
-            correctAnswer={quiz[categoryIndex]?.question[questionIndex].correctAnswer}
+            incorrectAnswers={
+              quiz[categoryIndex]?.question[questionIndex].incorrectAnswers
+            }
+            correctAnswer={
+              quiz[categoryIndex]?.question[questionIndex].correctAnswer
+            }
+            handleNext={handleNext}
+            handlePrevious={handlePrevious}
+            setQuestionIndex={setQuestionIndex}
           />
         </>
       );
