@@ -1,6 +1,6 @@
 export interface country{
     name: string;
-    alpha2code: string;
+    alpha2Code: string;
 
 }
 
@@ -11,7 +11,7 @@ export interface quizType{
 }
 export interface Props{
     countries:[];
-    quiz:quizType[];
+   
     handleSubmit: (e: React.FormEvent) => Promise<void>;
     handleChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 }

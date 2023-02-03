@@ -14,7 +14,7 @@ const Question = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `https://the-trivia-api.com/api/questions?limit=1&categories=${selectedCategory.categories}&difficulty=${selectedCategory.difficulty}&region=KE`
+          `http://localhost:3000/api/v1/quiz`
         );
     
           
